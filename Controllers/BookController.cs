@@ -1,31 +1,26 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Caso_Di_Studio.Data;
 using Microsoft.AspNetCore.Mvc;
-using Caso_Di_Studio.Entities;
 
 namespace Caso_Di_Studio.Controllers
 {
-    [Route("api/[Controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class BookController : ControllerBase
     {
+        private readonly DataContext _context;
+
+        public BookController(DataContext _context)
+        {
+            this._context = _context;
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var books = new List<Book>(){
-                new Book{
-                    Id=1,
-                    Titolo="Test",
-                    Anno="2024",
-                    Descrizione="Prova"
-                }
-            };
+            var books = _context.Books.ToList();
             return Ok(books);
         }
         
     }
 }
+
