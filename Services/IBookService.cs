@@ -11,5 +11,7 @@ namespace Caso_Di_Studio.Services
         Task<IEnumerable<Book>> GetAll();
         Task<Book> GetBookById(int id);
         Task<bool> DeleteBook(int id);
+        Task<Book> InsertBook(Book book);
+        Task<Book> UpdateBook(Book book);
     }
 }

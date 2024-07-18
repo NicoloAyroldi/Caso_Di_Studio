@@ -31,5 +31,13 @@ namespace Caso_Di_Studio.Services
         {
             return await _bookRepository.DeleteBook(id);
         }
+
+        public async Task<Book> InsertBook(Book book){
+            return await _bookRepository.InsertBook(book);
+        }
+
+        public async Task<Book> UpdateBook(Book book){
+            return await _bookRepository.UpdateBook(book);
+        }
     }
 }

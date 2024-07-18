@@ -39,5 +39,26 @@ namespace Caso_Di_Studio.Repository
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<Book> InsertBook(Book book){
+            _context.Books.Add(book);
+            await _context.SaveChangesAsync();
+            return book;
+        }
+
+        public async Task<Book> UpdateBook(Book book){
+            var bookToUpdate = await _context.Books.FindAsync(book.Id);
+            if (bookToUpdate == null)
+            {
+                return null;
+            }
+            
+            bookToUpdate.Titolo = book.Titolo;
+            bookToUpdate.Anno = book.Anno;
+            bookToUpdate.Descrizione = book.Descrizione;
+            
+            await _context.SaveChangesAsync();
+            return bookToUpdate;
+        }
     }
 }
