@@ -9,12 +9,10 @@ namespace Caso_Di_Studio.Data
 {
     public class DataContext : DbContext
     {
-
-
-        
         public DataContext(DbContextOptions<DataContext> options) : base(options){
 
         }
         public DbSet<Book> Books { get; set; }
+        public DbSet<Category> Category { get; set; }
     }
 }

@@ -20,6 +20,9 @@ builder.Services.AddDbContext<DataContext>(options =>{
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookService, BookService>();
 
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
 
 
 var app = builder.Build();
