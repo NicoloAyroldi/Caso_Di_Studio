@@ -2,11 +2,34 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Caso_Di_Studio.Entities;
+using Caso_Di_Studio.Repository;
+
 
 namespace Caso_Di_Studio.Services
 {
     public class BookService : IBookService
     {
-        
+        private readonly IBookRepository _bookRepository;
+
+        public BookService(IBookRepository bookRepository)
+        {
+            _bookRepository = bookRepository;
+        }
+
+        public async Task<IEnumerable<Book>> GetAll()
+        {
+            return await _bookRepository.GetAll();
+        }
+
+        public async Task<Book> GetBookById(int id)
+        {
+            return await _bookRepository.GetBookById(id);
+        }
+
+        public async Task<bool> DeleteBook(int id)
+        {
+            return await _bookRepository.DeleteBook(id);
+        }
     }
 }

@@ -1,5 +1,8 @@
 using Caso_Di_Studio.Data;
+using Caso_Di_Studio.Repository;
+using Caso_Di_Studio.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Caso_Di_Studio.Controllers
 {
@@ -7,20 +10,31 @@ namespace Caso_Di_Studio.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly IBookService _bookService;
 
-        public BookController(DataContext _context)
+        public BookController(IBookService bookService)
         {
-            this._context = _context;
+            _bookService = bookService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var books = _context.Books.ToList();
+            var books = await _bookService.GetAll();
             return Ok(books);
         }
         
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _bookService.DeleteBook(id);
+            if (!result)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
 }
 
