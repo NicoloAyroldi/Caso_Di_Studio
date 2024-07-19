@@ -19,6 +19,8 @@ namespace Caso_Di_Studio.Entities
       public Category? Category { get; set; }
       [JsonIgnore]
       public Author? Author { get; set; }
-      
+      [JsonIgnore]
+      public  PublishingH? PublishingH { get; set; }
+
     }
 }

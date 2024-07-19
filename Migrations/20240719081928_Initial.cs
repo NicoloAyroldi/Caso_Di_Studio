@@ -40,6 +40,21 @@ namespace Caso_Di_Studio.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PublishingH",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Indirizzo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Citta = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PublishingH", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Books",
                 columns: table => new
                 {
@@ -49,7 +64,8 @@ namespace Caso_Di_Studio.Migrations
                     Anno = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Descrizione = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
-                    AuthorId = table.Column<int>(type: "int", nullable: false)
+                    AuthorId = table.Column<int>(type: "int", nullable: false),
+                    PublishingHId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -66,6 +82,11 @@ namespace Caso_Di_Studio.Migrations
                         principalTable: "Category",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Books_PublishingH_PublishingHId",
+                        column: x => x.PublishingHId,
+                        principalTable: "PublishingH",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -77,6 +98,11 @@ namespace Caso_Di_Studio.Migrations
                 name: "IX_Books_CategoryId",
                 table: "Books",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Books_PublishingHId",
+                table: "Books",
+                column: "PublishingHId");
         }
 
         /// <inheritdoc />
@@ -90,6 +116,9 @@ namespace Caso_Di_Studio.Migrations
 
             migrationBuilder.DropTable(
                 name: "Category");
+
+            migrationBuilder.DropTable(
+                name: "PublishingH");
         }
     }
 }
