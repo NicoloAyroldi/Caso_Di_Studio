@@ -26,6 +26,9 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 
+builder.Services.AddScoped<IPublishingHRepository, PublishingHRepository>();
+builder.Services.AddScoped<IPublishingHService, PublishingHService>();
+
 
 
 
