@@ -57,6 +57,7 @@ namespace Caso_Di_Studio.Repository
             bookToUpdate.Anno = book.Anno;
             bookToUpdate.Descrizione = book.Descrizione;
             bookToUpdate.CategoryId = book.CategoryId;
+            bookToUpdate.AuthorId = book.AuthorId;
             
             await _context.SaveChangesAsync();
             return bookToUpdate;
