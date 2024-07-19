@@ -15,6 +15,8 @@ namespace Caso_Di_Studio.Entities
       public string Descrizione { get; set; }
       public int CategoryId { get; set; }
       public int AuthorId{ get; set; }
+      public int PublishingHId{ get; set; }
+
       [JsonIgnore]
       public Category? Category { get; set; }
       [JsonIgnore]

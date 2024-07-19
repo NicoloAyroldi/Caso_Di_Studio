@@ -65,7 +65,7 @@ namespace Caso_Di_Studio.Migrations
                     Descrizione = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     AuthorId = table.Column<int>(type: "int", nullable: false),
-                    PublishingHId = table.Column<int>(type: "int", nullable: true)
+                    PublishingHId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,7 +86,8 @@ namespace Caso_Di_Studio.Migrations
                         name: "FK_Books_PublishingH_PublishingHId",
                         column: x => x.PublishingHId,
                         principalTable: "PublishingH",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
