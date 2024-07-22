@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Caso_Di_Studio.Entities;
 using Caso_Di_Studio.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using Microsoft.EntityFrameworkCore;
 
 namespace Caso_Di_Studio.Controllers
 {
@@ -18,40 +20,87 @@ namespace Caso_Di_Studio.Controllers
             _AuthorService = authorService;
         }
 
-         [HttpGet]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var author = await _AuthorService.GetAll();
-            return Ok(author);
+            try
+            {
+                var authors = await _AuthorService.GetAll();
+                return Ok(authors);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Errore nel recupero degli autori.");
+            }
         }
         
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _AuthorService.DeleteAuthor(id);
-            if (!result)
+            try
             {
-                return NotFound();
-            }
+                var result = await _AuthorService.DeleteAuthor(id);
+                if (!result)
+                {
+                    return NotFound("Autore non trovato.");
+                }
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Errore durante la cancellazione dell'autore.");
+            }
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertAuthor([FromBody] Author author){
-            await _AuthorService.InsertAuthor(author);
-            return Ok(author);
+        public async Task<IActionResult> InsertAuthor([FromBody] Author author)
+        {
+            if (author == null)
+            {
+                return BadRequest("I dati dell'autore non sono validi.");
+            }
+
+            try
+            {
+                await _AuthorService.InsertAuthor(author);
+                return CreatedAtAction(nameof(GetAll), new { id = author.Id }, author);
+            }
+            catch (DbUpdateException dbEx)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Errore durante l'inserimento dell'autore.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Errore generico durante l'inserimento dell'autore.");
+            }
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAuthor(Author author)
+        public async Task<IActionResult> UpdateAuthor([FromBody] Author author)
         {
-            var UpdatedAuthor = await _AuthorService.UpdateAuthor(author);
-            if(UpdatedAuthor == null){
-                return NotFound();
+            if (author == null)
+            {
+                return BadRequest("I dati dell'autore non sono validi.");
             }
-            return Ok(UpdatedAuthor);
-        }
 
+            try
+            {
+                var updatedAuthor = await _AuthorService.UpdateAuthor(author);
+                if (updatedAuthor == null)
+                {
+                    return NotFound("Autore non trovato.");
+                }
+                return Ok(updatedAuthor);
+            }
+            catch (DbUpdateException dbEx)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Errore durante l'aggiornamento dell'autore.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Errore generico durante l'aggiornamento dell'autore.");
+            }
+        }
     }
 }

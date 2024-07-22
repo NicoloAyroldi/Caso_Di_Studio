@@ -33,7 +33,25 @@ namespace Caso_Di_Studio.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBookById(int id)
+        {
+            try
+            {
+                var book = await _bookService.GetBookById(id);
+                if (book == null)
+                {
+                    return NotFound("Libro non trovato.");
+                }
+                return Ok(book);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Errore nel recupero del libro.");
+            }
+        }
+
+       [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -41,16 +59,19 @@ namespace Caso_Di_Studio.Controllers
                 var result = await _bookService.DeleteBook(id);
                 if (!result)
                 {
-                    return NotFound("Libro non trovato.");
+                    return NotFound(new { message = "Libro non trovato." });
                 }
 
-                return NoContent();
+                // Invia un messaggio di successo come JSON
+                return Ok(new { message = "Libro eliminato con successo." });
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, "Errore durante la cancellazione del libro.");
+                // Restituisce un messaggio di errore come JSON
+                return StatusCode((int)HttpStatusCode.InternalServerError, new { message = "Errore durante la cancellazione del libro.", error = ex.Message });
             }
         }
+
 
         [HttpPost]
         public async Task<IActionResult> InsertBook([FromBody] Book book)
