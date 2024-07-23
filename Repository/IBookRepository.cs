@@ -14,5 +14,6 @@ namespace Caso_Di_Studio.Repository
         Task<Book> InsertBook(Book book);
         Task<Book> UpdateBook(Book book);
         Task<IEnumerable<Book>> GetBooksByCategory(int categoryId);
+        Task<IEnumerable<Book>> GetBooksByAuthor(int authorId);
     }
 }

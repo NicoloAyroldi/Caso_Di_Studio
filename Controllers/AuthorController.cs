@@ -33,6 +33,17 @@ namespace Caso_Di_Studio.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, "Errore nel recupero degli autori.");
             }
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var author = await _AuthorService.GetAuthorById(id);
+            if (author == null)
+            {
+                return NotFound();
+            }
+            return Ok(author);
+        }
         
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)

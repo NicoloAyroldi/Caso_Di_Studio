@@ -70,5 +70,11 @@ namespace Caso_Di_Studio.Repository
                          .Where(b => b.CategoryId == categoryId)
                          .ToListAsync();
         }
+         public async Task<IEnumerable<Book>> GetBooksByAuthor(int authorId)
+        {
+            return await _context.Books
+                         .Where(b => b.AuthorId == authorId)
+                         .ToListAsync();
+        }
     }
 }

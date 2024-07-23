@@ -142,5 +142,24 @@ namespace Caso_Di_Studio.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, "Errore durante il recupero dei libri.");
             }
         }
+
+        [HttpGet("author/{authorId}")]
+        public async Task<IActionResult> GetBooksByAuthor(int authorId)
+        {
+            try
+            {
+                var books = await _bookService.GetBooksByAuthor(authorId);
+                if (books == null || books.Count() == 0)
+                {
+                    return NotFound("Nessun libro trovato per questa categoria.");
+                }
+
+                return Ok(books);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Errore durante il recupero dei libri.");
+            }
+        }
     }
 }

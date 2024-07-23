@@ -24,6 +24,7 @@ namespace Caso_Di_Studio.Repository
 
         public async Task<Author> GetAuthorById(int id)
         {
+            // Usa FindAsync per cercare un'entità con la chiave primaria
             return await _context.Author.FindAsync(id);
         }
 

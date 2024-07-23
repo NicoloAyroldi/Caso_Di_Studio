@@ -45,6 +45,11 @@ namespace Caso_Di_Studio.Services
             return await _bookRepository.GetBooksByCategory(categoryId);
         }
 
+        public async Task<IEnumerable<Book>> GetBooksByAuthor(int authorId)
+        {
+            return await _bookRepository.GetBooksByAuthor(authorId);
+        }
+
         
     }
 }
