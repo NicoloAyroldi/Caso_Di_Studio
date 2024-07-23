@@ -13,5 +13,6 @@ namespace Caso_Di_Studio.Repository
         Task<bool> DeleteBook(int id);
         Task<Book> InsertBook(Book book);
         Task<Book> UpdateBook(Book book);
+        Task<IEnumerable<Book>> GetBooksByCategory(int categoryId);
     }
 }

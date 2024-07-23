@@ -39,5 +39,12 @@ namespace Caso_Di_Studio.Services
         public async Task<Book> UpdateBook(Book book){
             return await _bookRepository.UpdateBook(book);
         }
+
+        public async Task<IEnumerable<Book>> GetBooksByCategory(int categoryId)
+        {
+            return await _bookRepository.GetBooksByCategory(categoryId);
+        }
+
+        
     }
 }

@@ -122,5 +122,25 @@ namespace Caso_Di_Studio.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, "Errore generico durante l'aggiornamento del libro.");
             }
         }
+
+        // BookController.cs
+        [HttpGet("category/{categoryId}")]
+        public async Task<IActionResult> GetBooksByCategory(int categoryId)
+        {
+            try
+            {
+                var books = await _bookService.GetBooksByCategory(categoryId);
+                if (books == null || books.Count() == 0)
+                {
+                    return NotFound("Nessun libro trovato per questa categoria.");
+                }
+
+                return Ok(books);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Errore durante il recupero dei libri.");
+            }
+        }
     }
 }

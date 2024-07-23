@@ -64,5 +64,11 @@ namespace Caso_Di_Studio.Repository
             await _context.SaveChangesAsync();
             return bookToUpdate;
         }
+        public async Task<IEnumerable<Book>> GetBooksByCategory(int categoryId)
+        {
+            return await _context.Books
+                         .Where(b => b.CategoryId == categoryId)
+                         .ToListAsync();
+        }
     }
 }

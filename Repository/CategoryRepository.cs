@@ -22,10 +22,12 @@ namespace Caso_Di_Studio.Repository
             return await _context.Category.ToListAsync();
         }
 
-        public async Task<Category> GetCategoryById(int id)
+          public async Task<Category> GetCategoryById(int id)
         {
+            // Usa FindAsync per cercare un'entità con la chiave primaria
             return await _context.Category.FindAsync(id);
         }
+
 
         public async Task<bool> DeleteCategory(int id)
         {
